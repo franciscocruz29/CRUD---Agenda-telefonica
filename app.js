@@ -3,9 +3,9 @@ const app = express()
 
 let people = [
   {
-  id: 1,
-  name: "Arto Hellas",
-  number: "040-123456"
+    id: 1,
+    name: "Arto Hellas",
+    number: "040-123456"
   },
   {
     id: 2,
@@ -49,6 +49,35 @@ app.delete('/api/persons/:id', (request, response) => {
   people = people.filter(person => person.id !== id);
 
   response.status(204).end()
+})
+
+const generateId = () => {
+  const maxId = people.length > 0 ? Math.max(...people.map(n => n.id)) : 0
+  return maxId + 1
+}
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  if (!body.name || !body.number) {
+    return response.status(400).json({
+      error: "Name or number is missing",
+    });
+  } else if (people.find((n) => n.name === body.name)) {
+    return response.status(400).json({
+      error: "Name must be unique",
+    });
+  }
+  
+  let person = {
+    id: generateId(),
+    name: body.name,
+    number: body.number
+  }
+
+  people = people.concat(person)
+
+  response.json(person)
 })
 
 const port = process.env.PORT || 3001;
