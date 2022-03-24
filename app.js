@@ -1,5 +1,9 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
+
+app.use(morgan('tiny'))
+app.use(express.json())
 
 let people = [
   {
@@ -52,13 +56,13 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 const generateId = () => {
-  const maxId = people.length > 0 ? Math.max(...people.map(n => n.id)) : 0
+  const maxId = Math.floor(Math.random() * 999999999999);
   return maxId + 1
 }
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
-
+ 
   if (!body.name || !body.number) {
     return response.status(400).json({
       error: "Name or number is missing",
