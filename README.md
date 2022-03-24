@@ -28,4 +28,4 @@ Se implemento el manejo de errores para crear nuevas entradas. No se permite que
 
 ## Backend de la agenda telefónica, paso 7
 
-Se agreguo el middleware morgan a la aplicación para iniciar sesión. Se configúro para registrar mensajes en la consola según la pequeña configuración.
+Se agrego el middleware morgan a la aplicación para iniciar sesión. Se configúro para registrar mensajes en la consola según la pequeña configuración.
